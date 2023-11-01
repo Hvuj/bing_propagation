@@ -1,0 +1,57 @@
+name: Deploy Cloud Function
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true))
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Install python-dotenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-dotenv
+
+      - name: Load environment variables from file
+        run: |
+          while IFS= read -r line; do
+            if [[ ! $line =~ ^# ]]; then
+              export_key="$(echo $line | cut -d ':' -f 1)"
+              export_value="$(echo $line | cut -d ':' -f 2- | xargs)"
+              echo "$export_key=$export_value" >> $GITHUB_ENV
+            fi
+          done < .github/config/env.yml
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ env.google_cloud_project_id }}
+
+      - name: Deploy Cloud Function
+        run: |
+          gcloud functions deploy ${{ env.function_name }} \
+            --entry-point=${{ env.function_entry_point }} \
+            --runtime=python311 \
+            --trigger-http \
+            --allow-unauthenticated \
+            --region=${{ env.function_region }} \
+            --memory=${{ env.function_memory }} \
+            $(if [[ "${{ env.function_generation }}" == "2" ]]; then echo "--gen2"; fi)

@@ -1,0 +1,7 @@
+__pycache__/
+/.idea/
+/.env
+.github/workflows/repo_backup.yml
+venv
+.vscode
+%work%DE_Google_Propagation

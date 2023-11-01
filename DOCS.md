@@ -1,0 +1,37 @@
+- **Google Ads API documentation: Upload click conversions:**
+  - Link: https://developers.google.com/google-ads/api/docs/conversions/upload-clicks: The required fields for click conversions are:
+    - `conversion_date_time`: The date and time at which the conversion occurred.
+    - `conversion_value`: The monetary value of the conversion.
+    - `conversion_action`: The name of the conversion event.
+    - `user_identifiers`: User identifiers to identify a user across multiple devices and sessions.
+    - `custom_variables`: Custom variables to store additional information about a conversion.
+  - To specify the conversion date and time, use the `conversion_date_time` field.
+  - To specify the conversion value, use the `conversion_value` field.
+  - To specify the conversion action, use the `conversion_action` field.
+  - To specify user identifiers, use the `user_identifiers` field.
+  - To specify custom variables, use the `custom_variables` field.
+- **Google Ads Help Center: Upload click conversions:**
+  - Link: https://support.google.com/google-ads/answer/7014069: Click conversions are conversions that are manually uploaded to Google Ads. They can be used to track conversions that occur offline, such as phone calls or in-store sales.
+  - Click conversions can be uploaded using the Google Ads API or the Google Ads UI. The Google Ads API is a more flexible option, but it requires some technical knowledge. The Google Ads UI is a simpler option, but it is not as flexible.
+  - Click conversions have a few limitations:
+    - They must be manually uploaded, which can be time-consuming and error-prone.
+    - They are not real-time, so it may take some time for conversions to be reflected in your Google Ads reports.
+    - They may not be accurate, as it is possible for the data to be entered incorrectly.
+  - Click conversions have a few benefits:
+    - They can be used to track conversions that occur offline.
+    - They can be used to get a more complete picture of your marketing performance by including offline conversions in your reports.
+    - They can be used to optimize your campaigns and improve your results.
+- **ClickConversion user_identifiers:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/ClickConversion#user_identifiers: The `user_identifiers` field of the `ClickConversion` object is used to specify the user identifiers for a click conversion. User identifiers can be used to track conversions across multiple devices and sessions.
+- **CustomVariable:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/CustomVariable: The `CustomVariable` object is used to define a custom variable. Custom variables can be used to store additional information about a conversion, such as the customer's name or email address.
+- **CartData:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/CartData: The `CartData` object is used to store information about the contents of a shopping cart. Cart data can be used to track conversions for e-commerce websites.
+- **UserIdentifier:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/UserIdentifier: The `UserIdentifier` object is used to identify a user. User identifiers can be used to track conversions across multiple devices and sessions.
+- **UserIdentifierSourceEnum.UserIdentifierSource:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/UserIdentifierSourceEnum.UserIdentifierSource: The `UserIdentifierSource` enum specifies the source of a user identifier. The source of a user identifier can be used to determine how to handle the identifier.
+- **OfflineUserAddressInfo:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/OfflineUserAddressInfo: The `OfflineUserAddressInfo` object is used to store information about a user's address. Address information can be used to improve the accuracy of conversion tracking.
+- **ConversionEnvironmentEnum.ConversionEnvironment:**
+  - Link: https://developers.google.com/google-ads/api/reference/rpc/v14/ConversionEnvironmentEnum.ConversionEnvironment: The `Conversion
