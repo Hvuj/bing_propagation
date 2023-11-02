@@ -32,9 +32,9 @@ def run(request: Optional[Any]) -> str:
     data = service.read_data()
     splitted_data = service.transform_data(data)
 
-    # loader = service.load_data(splitted_data)
-    # # print(loader)
+    loader = service.load_data(splitted_data)
+    print(loader)
     end = time.time()
 
     print(end - start)
-    return str(splitted_data)
+    return str(loader)

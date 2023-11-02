@@ -3,7 +3,6 @@ EventCreator class for creating Event objects from input data.
 """
 import logging
 from bingads.v13.bulk.entities.bulk_offline_conversion import BulkOfflineConversion
-from bingads.v13.bulk.bulk_service_manager import BulkServiceManager
 from bingads import ServiceClient
 from src.models.mapper import Mapper
 from src.models.workers import DataMapperThreadedWorker
@@ -33,15 +32,29 @@ class EventCreator(Mapper):
         self.__version = BingAdsApiVersion().version
         self.__enviorment = "production"
         self.__service = "CampaignManagementService"
+        self.__bulk_service = "BulkService"
 
     @property
     def client(self):
         return ServiceClient(
             service=self.__service,
-            version=13,
+            version=self.__version,
             authorization_data=self.__client,
             environment=self.__enviorment,
         )
+
+    @property
+    def bulk_client(self):
+        return ServiceClient(
+            service=self.__bulk_service,
+            version=self.__version,
+            authorization_data=self.__client,
+            environment=self.__enviorment,
+        )
+
+    @property
+    def __auth_data(self):
+        return self.__client
 
     def map_data(self):
         """
@@ -84,11 +97,13 @@ class EventCreator(Mapper):
             offline_conversion.MicrosoftClickId = data["click_id"]
             bulk_offline_conversion.offline_conversion = offline_conversion
 
-            upload_entities = [bulk_offline_conversion]
-            # click_conversion = BulkServiceManager(
-            #     authorization_data=self.client
-            # ).upload_entities(entity_upload_parameters=upload_entities)
-            logging.info("Sending conversion data: %s", bulk_offline_conversion)
+            # response = self.bulk_client.UploadEntityRecords(
+            #     AccountId=self.__auth_data.customer_id,
+            #     EntityRecords=[bulk_offline_conversion],
+            #     ResponseMode="ErrorsAndResults",
+            # )
+
+            logging.info("Sending conversion data: %s", offline_conversion)
             return bulk_offline_conversion
 
         except Exception as error:
